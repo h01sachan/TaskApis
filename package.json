@@ -1,0 +1,27 @@
+{
+  "name": "agriapis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h01sachan/agriapis.git"
+  },
+  "author": "Himanshu Sachan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/h01sachan/agriapis/issues"
+  },
+  "homepage": "https://github.com/h01sachan/agriapis#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
+    "yup": "^0.32.9"
+  }
+}
