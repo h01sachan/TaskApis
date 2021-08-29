@@ -6,9 +6,9 @@ const morgan = require("morgan");
 dotenv.config({ path: "./.env" });
 const { errorHandler } = require("./error/errorHandler");
 const api = require("./routes/api");
-
 const app = express();
 app.use(morgan("tiny"));
+
 app.use(cors());
 
 app.use(express.json());
@@ -45,7 +45,7 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
     console.log("connected to database")
     app.listen(PORT);
-    console.log("server is running on port " + process.env.PORT);
+    console.log("server is running on port " + PORT);
 }).catch((err) => {
     console.log(err);
 });
