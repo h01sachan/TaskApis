@@ -3,11 +3,25 @@ var cors = require('cors');
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-dotenv.config({ path: "./.env" });
+const config = require('config'); //we load the db location from the JSON files
 const { errorHandler } = require("./error/errorHandler");
 const api = require("./routes/api");
 const app = express();
-app.use(morgan("tiny"));
+//db connection
+mongoose.connect(config.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+//don't show the log when it is test
+if(config.util.getEnv('NODE_ENV') !== 'test') {
+    //use morgan to log at command line
+    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+}
 
 app.use(cors());
 
@@ -37,15 +51,7 @@ app.use("*", (req, res) => {
 
 let PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-}).then(() => {
-    console.log("connected to database")
-    app.listen(PORT);
-    console.log("server is running on port " + PORT);
-}).catch((err) => {
-    console.log(err);
-});
+app.listen(PORT);
+console.log("Listening on PORT " + PORT);
+
+module.exports = app; // for testing
